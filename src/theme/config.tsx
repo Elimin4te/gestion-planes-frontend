@@ -256,6 +256,10 @@ export const theme = extendTheme(
         fonts: {
             heading: 'Poppins',
             body: 'Poppins'
-        }
+        },
+        config: {
+          initialColorMode: "dark", // Modo oscuro por defecto.
+          useSystemColorMode: false,
+        },
     }
 )

@@ -1,74 +1,40 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 
-import Home from '@pages/home/page'
-import { AuthBold, AuthColumn, AuthCover, AuthImage, AuthPlain, AuthSidebar, AuthSimple } from '@pages/auth'
-import { FullWidthDoubleStack, ContainerDoubleStack, ToggleAsideBar, NavSidebar, DrawerNavigation, ToggleDrawerNavigation } from '@pages/layouts'
-import { Projects, Stats } from '@pages/widgets'
+import { urlInicial, urlLogin } from '@src/constants'
+import { ReactElement } from 'react'
+
+import { useContextoAutenticacion } from '@src/contexts/contextoAutentacion'
+
+import Login from '@src/pages/autenticacion/login'
+import Navegacion from '@src/pages/layout/layoutNavegacion'
+
+import ListadoPlanesAprendizaje from '@src/pages/planes/aprendizaje/listadoPlanesAprendizaje'
+
+export const RutaProtegida = (props: {children?: ReactElement}) => {
+    const { children } = props
+    let { docente } = useContextoAutenticacion()
+    return ( docente ? children: <Navigate to={urlLogin}/> )
+}
 
 const router = createBrowserRouter([
     {
-        path: '/',
-        element: <Home />
+        path: urlInicial,
+        element: (
+            <RutaProtegida>
+                <Navegacion title='Planes de Aprendizaje'>
+                    <ListadoPlanesAprendizaje/>
+                </Navegacion>
+            </RutaProtegida>
+        )
     },
     {
-        path: '/auth/simple',
-        element: <AuthSimple />
+        path: urlLogin,
+        element: <Login />
     },
+    // URL por defecto para evitar 404
     {
-        path: '/auth/cover',
-        element: <AuthCover />
-    },
-    {
-        path: '/auth/bold',
-        element: <AuthBold />
-    },
-    {
-        path: '/auth/plain',
-        element: <AuthPlain />
-    },
-    {
-        path: '/auth/image',
-        element: <AuthImage />
-    },
-    {
-        path: '/auth/column',
-        element: <AuthColumn />
-    },
-    {
-        path: '/auth/sidebar',
-        element: <AuthSidebar />
-    },
-    {
-        path: '/layouts/full-width-double-stack',
-        element: <FullWidthDoubleStack />
-    },
-    {
-        path: '/layouts/container-double-stack',
-        element: <ContainerDoubleStack />
-    },
-    {
-        path: '/layouts/toggle-sidebar',
-        element: <ToggleAsideBar />
-    },
-    {
-        path: '/layouts/nav-toggle-sidebar',
-        element: <NavSidebar />
-    },
-    {
-        path: '/layouts/nav-toggle-drawer-sidebar',
-        element: <ToggleDrawerNavigation />
-    },
-    {
-        path: '/layouts/nav-drawer-sidebar',
-        element: <DrawerNavigation />
-    },
-    {
-        path: '/widgets/projects',
-        element: <Projects />
-    },
-    {
-        path: '/widgets/stats',
-        element: <Stats />
+        path: '*',
+        element: <Navigate to={urlLogin} />
     }
 ])
 
