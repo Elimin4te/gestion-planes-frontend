@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 
-import { urlInicial, urlLogin } from '@src/constants'
+import { urlInicial, urlLogin, urlPlanesEvaluacion } from '@src/constants'
 import { ReactElement } from 'react'
 
 import { useContextoAutenticacion } from '@src/contexts/contextoAutentacion'
@@ -23,6 +23,16 @@ const router = createBrowserRouter([
             <RutaProtegida>
                 <Navegacion title='Planes de Aprendizaje'>
                     <ListadoPlanesAprendizaje/>
+                </Navegacion>
+            </RutaProtegida>
+        )
+    },
+    {
+        path: urlPlanesEvaluacion,
+        element: (
+            <RutaProtegida>
+                <Navegacion title='Planes de Evaluación'>
+                    <></>
                 </Navegacion>
             </RutaProtegida>
         )

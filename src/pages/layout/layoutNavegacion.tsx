@@ -3,13 +3,14 @@ import { BiMenu } from 'react-icons/bi'
 import { AiOutlineBook, AiOutlinePercentage, AiOutlineUser, AiOutlineClose, AiOutlinePoweroff } from 'react-icons/ai'
 
 import { Head } from "@src/components"
-import { nombreProyecto, urlLogin } from "@src/constants"
+import { nombreProyecto, urlLogin, urlInicial, urlPlanesEvaluacion } from "@src/constants"
 
 import { Link, useNavigate } from 'react-router-dom'
 import { ReactElement } from 'react'
 
 import { logout } from '@src/api/autenticacionDocente'
 import { useContextoAutenticacion, Docente } from '@src/contexts/contextoAutentacion'
+
 
 type ItemDeLista = {
     texto: string
@@ -21,12 +22,12 @@ const listaDeItems: ItemDeLista[] = [
     {
         texto: 'Aprendizaje',
         icono: AiOutlineBook,
-        link: '/planes-aprendizaje'
+        link: urlInicial
     },
     {
         texto: 'Evaluación',
         icono: AiOutlinePercentage,
-        link: '/planes-evauacion'
+        link: urlPlanesEvaluacion
     }
 ]
 
