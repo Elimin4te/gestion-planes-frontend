@@ -21,7 +21,7 @@ import { ImagenLogin } from '@assets/images'
 
 import { withMask } from 'use-mask-input'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useContextoAutenticacion, Docente } from '@src/contexts/contextoAutentacion'
@@ -32,15 +32,15 @@ import { obtenerPrimerValor } from '@src/utils'
 export default function Login() {
 
     const [error, setError] = useState()
-
-    const navigate = useNavigate()
-    const { docente, setDocente } = useContextoAutenticacion()
+    const { setDocente } = useContextoAutenticacion()
+    const navegar = useNavigate()
 
     const obtenerInfoDocente = () => {
         infoDocente().then(
             (response) => {
                 let docente: Docente = response.data
                 setDocente(docente)
+                navegar(urlInicial)
             }
         ).catch(
             (err) => console.log("Ocurrió un error recuperando la información del docente:", err)
@@ -51,19 +51,11 @@ export default function Login() {
         e.preventDefault()
         let cedula: string = e.target.cedula.value
         login(cedula).then(
-            () => {
-                obtenerInfoDocente()
-                navigate(urlInicial)
-            }
+            () => obtenerInfoDocente()
         ).catch(
             (err) => setError(obtenerPrimerValor(err.response.data))
         )
     }
-
-    // Redireccion al docente si ya esta autenticado
-    useEffect(() => {
-        if (docente) { navigate(urlInicial) }
-    }, [])
 
     return (
         <>

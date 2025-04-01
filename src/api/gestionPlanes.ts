@@ -9,7 +9,7 @@ export const descargarPlanAprendizaje = (codigo_pa: string) => {
 }
 
 export const eliminarPlanAprendizaje = (codigo_pa: string) => {
-    return axios.delete(`gestion-planes/planes-aprendizaje/${codigo_pa}`)
+    return axios.delete(`gestion-planes/planes-aprendizaje/${codigo_pa}/`)
 }
 
 export const listarPlanesEvaluacion = () => {
