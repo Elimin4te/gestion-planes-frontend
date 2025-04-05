@@ -78,14 +78,14 @@ export const turnos = {
 };
 
 export type ObjetivoPlanAprendizaje = {
-    id: BigInteger,
+    id: number,
     titulo: string,
     contenido: string,
     criterioLogro: string,
     estrategiaDidactica: string,
-    duracionHoras: BigInteger,
+    duracionHoras: number,
     planAprendizaje: string,
-    evaluacionAsociada: BigInteger
+    evaluacionAsociada: number
 }
 
 export type PlanDeAprendizaje = {
@@ -98,4 +98,4 @@ export type PlanDeAprendizaje = {
     fechaCreacion: Date | string,
     fechaModificacion: Date | string,
     objetivosPlanAprendizaje: ObjetivoPlanAprendizaje[]
-}
+}   
