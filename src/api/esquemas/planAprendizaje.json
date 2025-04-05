@@ -1,0 +1,69 @@
+{
+    "PlanAprendizaje": {
+        "type": "object",
+        "properties": {
+            "codigo_grupo": {
+                "type": "string",
+                "maxLength": 32
+            },
+            "docente": {
+                "type": "string"
+            },
+            "unidad_curricular": {
+                "type": "string"
+            },
+            "nucleo": {
+                "$ref": "#/components/schemas/NucleoEnum"
+            },
+            "turno": {
+                "$ref": "#/components/schemas/TurnoEnum"
+            },
+            "pnf": {
+                "type": "string",
+                "maxLength": 32
+            },
+            "fecha_creacion": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "fecha_modificacion": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+            }
+        },
+        "required": [
+            "codigo_grupo",
+            "docente",
+            "nucleo",
+            "objetivos_plan_aprendizaje",
+            "pnf",
+            "turno",
+            "unidad_curricular"
+        ],
+        "components": {
+            "schemas": {
+                "NucleoEnum": {
+                    "type": "string",
+                    "enum": [
+                        "TRANSVERSAL",
+                        "EPISTEMOLOGICO",
+                        "SOCIO_POLITICO",
+                        "TECNOLOGICO_PROFESIONAL"
+                    ],
+                    "description": "* `TRANSVERSAL` - Transversal\n* `EPISTEMOLOGICO` - Epistemológico\n* `SOCIO_POLITICO` - Socio Político\n* `TECNOLOGICO_PROFESIONAL` - Tecnológico Profesional"
+                },
+                "TurnoEnum": {
+                    "type": "string",
+                    "enum": [
+                        "N",
+                        "V",
+                        "M",
+                        "S"
+                    ],
+                    "description": "* `N` - Nocturno\n* `V` - Vespertino\n* `M` - Matutino\n* `S` - Sabatino"
+                }
+            }
+        }
+    }
+}

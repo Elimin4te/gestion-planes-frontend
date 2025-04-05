@@ -1,0 +1,59 @@
+{
+    "ObjetivoPlanAprendizaje": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "integer",
+                "readOnly": true
+            },
+            "titulo": {
+                "type": "string",
+                "maxLength": 64
+            },
+            "contenido": {
+                "type": "string"
+            },
+            "criterio_logro": {
+                "type": "string"
+            },
+            "estrategia_didactica": {
+                "$ref": "#/components/schemas/EstrategiaDidacticaEnum"
+            },
+            "duracion_horas": {
+                "type": "integer",
+                "maximum": 9,
+                "minimum": 2
+            },
+            "plan_aprendizaje": {
+                "type": "string"
+            },
+            "evaluacion_asociada": {
+                "type": "integer",
+                "nullable": true
+            }
+        },
+        "required": [
+            "contenido",
+            "criterio_logro",
+            "duracion_horas",
+            "id",
+            "plan_aprendizaje",
+            "titulo"
+        ],
+        "components": {
+            "schemas": {
+                "EstrategiaDidacticaEnum": {
+                    "type": "string",
+                    "enum": [
+                        "ABP",
+                        "CLASE_INVERTIDA",
+                        "ESTUDIO_CASOS",
+                        "APRENDIZAJE_BASADO_EN_PROYECTOS",
+                        "OTRA"
+                    ],
+                    "description": "* `ABP` - Aprendizaje Basado en Problemas\n* `CLASE_INVERTIDA` - Clase Invertida\n* `ESTUDIO_CASOS` - Estudio de Casos\n* `APRENDIZAJE_BASADO_EN_PROYECTOS` - Aprendizaje Basado en Proyectos\n* `OTRA` - Otra"
+                }
+            }
+        }
+    }
+}

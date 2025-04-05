@@ -1,0 +1,254 @@
+{
+    "PlanEvaluacion": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "integer",
+                "readOnly": true
+            },
+            "plan_aprendizaje": {
+                "type": "string"
+            },
+            "items_plan_evaluacion": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/ItemPlanEvaluacion"
+                },
+                "readOnly": true
+            },
+            "nombre": {
+                "type": "string",
+                "maxLength": 96
+            },
+            "fecha_creacion": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "fecha_modificacion": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+            }
+        },
+        "required": [
+            "id",
+            "items_plan_evaluacion",
+            "nombre",
+            "plan_aprendizaje"
+        ],
+        "components": {
+            "schemas": {
+                "ItemPlanEvaluacion": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "integer",
+                            "readOnly": true
+                        },
+                        "objetivos": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/ObjetivoPlanAprendizaje"
+                            },
+                            "readOnly": true
+                        },
+                        "instrumento_evaluacion": {
+                            "$ref": "#/components/schemas/InstrumentoEvaluacionEnum"
+                        },
+                        "tipo_evaluacion": {
+                            "$ref": "#/components/schemas/TipoEvaluacionEnum"
+                        },
+                        "habilidades_a_evaluar": {
+                            "type": "string"
+                        },
+                        "peso": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/schemas/PesoEnum"
+                                },
+                                {
+                                    "minimum": -32768,
+                                    "maximum": 32767
+                                }
+                            ]
+                        },
+                        "fecha_planificada": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "plan_evaluacion": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "fecha_planificada",
+                        "habilidades_a_evaluar",
+                        "id",
+                        "objetivos",
+                        "plan_evaluacion"
+                    ],
+                    "components": {
+                        "schemas": {
+                            "InstrumentoEvaluacionEnum": {
+                                "type": "string",
+                                "enum": [
+                                    "MAPA_CONCEPTUAL",
+                                    "PRUEBA_ESCRITA",
+                                    "OBSERVACION_DIRECTA",
+                                    "PORTAFOLIO",
+                                    "DIARIO_DE_CAMPO",
+                                    "RUBRICA",
+                                    "LISTA_DE_COTEJO",
+                                    "ESCALA_DE_ESTIMACION",
+                                    "PROYECTO",
+                                    "EXPOSICION",
+                                    "DEBATE",
+                                    "ENSAYO",
+                                    "INFORME",
+                                    "OTRO"
+                                ],
+                                "description": "* `MAPA_CONCEPTUAL` - Mapa Conceptual\n* `PRUEBA_ESCRITA` - Prueba Escrita\n* `OBSERVACION_DIRECTA` - Observación Directa\n* `PORTAFOLIO` - Portafolio\n* `DIARIO_DE_CAMPO` - Diario de Campo\n* `RUBRICA` - Rúbrica\n* `LISTA_DE_COTEJO` - Lista de Cotejo\n* `ESCALA_DE_ESTIMACION` - Escala de Estimación\n* `PROYECTO` - Proyecto\n* `EXPOSICION` - Exposición\n* `DEBATE` - Debate\n* `ENSAYO` - Ensayo\n* `INFORME` - Informe\n* `OTRO` - Otro"
+                            },
+                            "TipoEvaluacionEnum": {
+                                "type": "string",
+                                "enum": [
+                                    "DI",
+                                    "FO",
+                                    "SU",
+                                    "AU",
+                                    "CO"
+                                ],
+                                "description": "* `DI` - Diagnóstica\n* `FO` - Formativa\n* `SU` - Sumativa\n* `AU` - Autoevaluación\n* `CO` - Coevaluación"
+                            },
+                            "PesoEnum": {
+                                "type": "integer",
+                                "enum": [
+                                    5,
+                                    10,
+                                    15,
+                                    20,
+                                    25
+                                ],
+                                "description": "* `5` - 5%\n* `10` - 10%\n* `15` - 15%\n* `20` - 20%\n* `25` - 25%"
+                            },
+                            "ObjetivoPlanAprendizaje": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "readOnly": true
+                                    },
+                                    "titulo": {
+                                        "type": "string",
+                                        "maxLength": 64
+                                    },
+                                    "contenido": {
+                                        "type": "string"
+                                    },
+                                    "criterio_logro": {
+                                        "type": "string"
+                                    },
+                                    "estrategia_didactica": {
+                                        "$ref": "#/components/schemas/EstrategiaDidacticaEnum"
+                                    },
+                                    "duracion_horas": {
+                                        "type": "integer",
+                                        "maximum": 9,
+                                        "minimum": 2
+                                    },
+                                    "plan_aprendizaje": {
+                                        "type": "string"
+                                    },
+                                    "evaluacion_asociada": {
+                                        "type": "integer",
+                                        "nullable": true
+                                    }
+                                },
+                                "required": [
+                                    "contenido",
+                                    "criterio_logro",
+                                    "duracion_horas",
+                                    "id",
+                                    "plan_aprendizaje",
+                                    "titulo"
+                                ],
+                                "components": {
+                                    "schemas": {
+                                        "EstrategiaDidacticaEnum": {
+                                            "type": "string",
+                                            "enum": [
+                                                "ABP",
+                                                "CLASE_INVERTIDA",
+                                                "ESTUDIO_CASOS",
+                                                "APRENDIZAJE_BASADO_EN_PROYECTOS",
+                                                "OTRA"
+                                            ],
+                                            "description": "* `ABP` - Aprendizaje Basado en Problemas\n* `CLASE_INVERTIDA` - Clase Invertida\n* `ESTUDIO_CASOS` - Estudio de Casos\n* `APRENDIZAJE_BASADO_EN_PROYECTOS` - Aprendizaje Basado en Proyectos\n* `OTRA` - Otra"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "ObjetivoPlanAprendizaje": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "integer",
+                            "readOnly": true
+                        },
+                        "titulo": {
+                            "type": "string",
+                            "maxLength": 64
+                        },
+                        "contenido": {
+                            "type": "string"
+                        },
+                        "criterio_logro": {
+                            "type": "string"
+                        },
+                        "estrategia_didactica": {
+                            "$ref": "#/components/schemas/EstrategiaDidacticaEnum"
+                        },
+                        "duracion_horas": {
+                            "type": "integer",
+                            "maximum": 9,
+                            "minimum": 2
+                        },
+                        "plan_aprendizaje": {
+                            "type": "string"
+                        },
+                        "evaluacion_asociada": {
+                            "type": "integer",
+                            "nullable": true
+                        }
+                    },
+                    "required": [
+                        "contenido",
+                        "criterio_logro",
+                        "duracion_horas",
+                        "id",
+                        "plan_aprendizaje",
+                        "titulo"
+                    ],
+                    "components": {
+                        "schemas": {
+                            "EstrategiaDidacticaEnum": {
+                                "type": "string",
+                                "enum": [
+                                    "ABP",
+                                    "CLASE_INVERTIDA",
+                                    "ESTUDIO_CASOS",
+                                    "APRENDIZAJE_BASADO_EN_PROYECTOS",
+                                    "OTRA"
+                                ],
+                                "description": "* `ABP` - Aprendizaje Basado en Problemas\n* `CLASE_INVERTIDA` - Clase Invertida\n* `ESTUDIO_CASOS` - Estudio de Casos\n* `APRENDIZAJE_BASADO_EN_PROYECTOS` - Aprendizaje Basado en Proyectos\n* `OTRA` - Otra"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
