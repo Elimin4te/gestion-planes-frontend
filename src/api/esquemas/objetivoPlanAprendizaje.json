@@ -1,58 +1,96 @@
 {
-    "ObjetivoPlanAprendizaje": {
-        "type": "object",
-        "properties": {
-            "id": {
-                "type": "integer",
-                "readOnly": true
-            },
-            "titulo": {
-                "type": "string",
-                "maxLength": 64
-            },
-            "contenido": {
-                "type": "string"
-            },
-            "criterio_logro": {
-                "type": "string"
-            },
-            "estrategia_didactica": {
-                "$ref": "#/components/schemas/EstrategiaDidacticaEnum"
-            },
-            "duracion_horas": {
-                "type": "integer",
-                "maximum": 9,
-                "minimum": 2
-            },
-            "plan_aprendizaje": {
-                "type": "string"
-            },
-            "evaluacion_asociada": {
-                "type": "integer",
-                "nullable": true
-            }
+    "type": "object",
+    "properties": {
+        "titulo": {
+            "title": "Título",
+            "type": "string",
+            "maxLength": 64
         },
-        "required": [
-            "contenido",
-            "criterio_logro",
-            "duracion_horas",
-            "id",
-            "plan_aprendizaje",
-            "titulo"
-        ],
-        "components": {
-            "schemas": {
-                "EstrategiaDidacticaEnum": {
-                    "type": "string",
-                    "enum": [
-                        "ABP",
-                        "CLASE_INVERTIDA",
-                        "ESTUDIO_CASOS",
-                        "APRENDIZAJE_BASADO_EN_PROYECTOS",
-                        "OTRA"
-                    ],
-                    "description": "* `ABP` - Aprendizaje Basado en Problemas\n* `CLASE_INVERTIDA` - Clase Invertida\n* `ESTUDIO_CASOS` - Estudio de Casos\n* `APRENDIZAJE_BASADO_EN_PROYECTOS` - Aprendizaje Basado en Proyectos\n* `OTRA` - Otra"
-                }
+        "contenido": {
+            "title": "Contenido",
+            "type": "string",
+            "widget": "textarea"
+        },
+        "criterio_logro": {
+            "title": "Criterio de Logro",
+            "type": "string",
+            "widget": "textarea"
+        },
+        "estrategia_didactica": {
+            "title": "Estrategia Didáctica",
+            "$ref": "#/components/schemas/EstrategiaDidacticaEnum"
+        },
+        "duracion_horas": {
+            "title": "Duración (h)",
+            "type": "integer",
+            "maximum": 9,
+            "minimum": 2
+        },
+        "plan_aprendizaje": {
+            "title": "Plan de Aprendizaje Asociado",
+            "type": "string",
+            "default": "",
+            "readOnly": true
+        },
+        "evaluacion_asociada": {
+            "title": "Evaluación Asociada",
+            "$ref": "#/components/schemas/EvaluacionAsociadaEnum"
+        }
+    },
+    "required": [
+        "contenido",
+        "criterio_logro",
+        "duracion_horas",
+        "estrategia_didactica",
+        "plan_aprendizaje",
+        "titulo"
+    ],
+    "components": {
+        "schemas": {
+            "EstrategiaDidacticaEnum": {
+                "type": "string",
+                "enum": [
+                    "CL",
+                    "TR",
+                    "DE",
+                    "EP",
+                    "AP",
+                    "PY",
+                    "TA",
+                    "LB",
+                    "EX",
+                    "SE",
+                    "TI",
+                    "TC",
+                    "VA",
+                    "PC",
+                    "EV",
+                    "OT"
+                ],
+                "enumNames": [
+                    "Clase magistral",
+                    "Trabajo en grupo",
+                    "Debate",
+                    "Estudio de caso",
+                    "Aprendizaje basado en problemas",
+                    "Proyecto",
+                    "Taller",
+                    "Laboratorio",
+                    "Exposición",
+                    "Seminario",
+                    "Tutoría individual",
+                    "Tutoría colectiva",
+                    "Visita guiada",
+                    "Práctica de campo",
+                    "Evaluación",
+                    "Otras"
+                ]
+            },
+            "EvaluacionAsociadaEnum": {
+                "type": "integer",
+                "enum": [0],
+                "enumNames": [""],
+                "nullable": true
             }
         }
     }

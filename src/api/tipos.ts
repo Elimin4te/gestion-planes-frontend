@@ -1,4 +1,8 @@
-export const estrategiasDidacticas = {
+export type Primario = string | number | any
+
+export type Extendible = { [attr: string]: Primario }
+
+export const estrategiasDidacticas: Extendible = {
     CL: 'Clase magistral',
     TR: 'Trabajo en grupo',
     DE: 'Debate',
@@ -17,7 +21,7 @@ export const estrategiasDidacticas = {
     OT: 'Otras'
 };
 
-export const instrumentoEvaluacion = {
+export const instrumentoEvaluacion: Extendible = {
     PR: 'Prueba escrita (objetiva)',
     PE: 'Prueba escrita (ensayo)',
     PO: 'Prueba oral',
@@ -39,14 +43,14 @@ export const instrumentoEvaluacion = {
     OT: 'Otras'
 };
 
-export const nucleos = {
+export const nucleos: Extendible = {
     FLO: 'La Floresta',
     URB: 'La Urbina',
     ALT: 'Altagracia',
     LGA: 'La Guaira'
 }
 
-export const pesos = {
+export const pesos: Extendible = {
     5: '5%',
     10: '10%',
     15: '15%',
@@ -54,7 +58,7 @@ export const pesos = {
     25: '25%'
 };
 
-export const tiposEvaluacion = {
+export const tiposEvaluacion: Extendible = {
     DI: 'Diagnóstica',
     FO: 'Formativa',
     SU: 'Sumativa',
@@ -62,7 +66,7 @@ export const tiposEvaluacion = {
     CO: 'Coevaluación'
 };
 
-export const trayectos = {
+export const trayectos: Extendible = {
     0: 'Inicial',
     1: '1',
     2: '2',
@@ -70,32 +74,71 @@ export const trayectos = {
     4: '4'
 };
 
-export const turnos = {
+export const turnos: Extendible = {
     N: 'Nocturno',
     V: 'Vespertino',
     M: 'Matutino',
-    S: 'Sabatino'
+    S: 'Sabatino',
 };
 
-export type ObjetivoPlanAprendizaje = {
-    id: number,
-    titulo: string,
-    contenido: string,
-    criterioLogro: string,
-    estrategiaDidactica: string,
-    duracionHoras: number,
-    planAprendizaje: string,
-    evaluacionAsociada: number
+export type ErrorAPI = {
+    [attr: string]: string[]
 }
 
+export type ObjetivoPlanAprendizaje = {
+    id: number;
+    titulo: string;
+    contenido: string;
+    criterio_logro: string;
+    estrategia_didactica: string;
+    duracion_horas: number;
+    plan_aprendizaje: string;
+    evaluacion_asociada: number;
+};
+
 export type PlanDeAprendizaje = {
-    codigoGrupo: string,
-    docente: string,
-    unidadCurricular: string,
-    nucleo: string,
-    turno: string,
-    pnf: string,
-    fechaCreacion: Date | string,
-    fechaModificacion: Date | string,
-    objetivosPlanAprendizaje: ObjetivoPlanAprendizaje[]
-}   
+    codigo_grupo: string;
+    docente: string;
+    unidad_curricular: string;
+    nucleo: string;
+    turno: string;
+    pnf: string;
+    fecha_creacion?: string;
+    fecha_modificacion?: string;
+    plan_evaluacion?: number;
+    objetivos_plan_aprendizaje?: ObjetivoPlanAprendizaje[];
+};
+
+export type PlanDeEvaluacion = {
+    id: number;
+    plan_aprendizaje: string;
+    items_plan_evaluacion: ItemPlanEvaluacion[];
+    nombre: string;
+    fecha_creacion: string; // Formato $date-time
+    fecha_modificacion?: string | null; // Formato $date-time, nullable
+};
+
+export type ItemPlanEvaluacion = {
+    id: number;
+    objetivos: ObjetivoPlanAprendizaje[];
+    instrumento_evaluacion: string;
+    tipo_evaluacion: string;
+    habilidades_a_evaluar: string;
+    peso: number;
+    fecha_planificada: string; // Formato $date
+    plan_evaluacion: number;
+};
+
+export enum SemestreEnum {
+    NA = 'NA', // No Aplica
+    Uno = '1',
+    Dos = '2',
+}
+
+export interface UnidadCurricular {
+    codigo: string;
+    trayecto: 0 | 1 | 2 | 3 | 4;
+    semestre: SemestreEnum;
+    unidades_credito: number;
+    nombre: string;
+}

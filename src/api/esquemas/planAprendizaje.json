@@ -1,68 +1,89 @@
 {
-    "PlanAprendizaje": {
-        "type": "object",
-        "properties": {
-            "codigo_grupo": {
-                "type": "string",
-                "maxLength": 32
-            },
-            "docente": {
-                "type": "string"
-            },
-            "unidad_curricular": {
-                "type": "string"
-            },
-            "nucleo": {
-                "$ref": "#/components/schemas/NucleoEnum"
-            },
-            "turno": {
-                "$ref": "#/components/schemas/TurnoEnum"
-            },
-            "pnf": {
-                "type": "string",
-                "maxLength": 32
-            },
-            "fecha_creacion": {
-                "type": "string",
-                "format": "date-time"
-            },
-            "fecha_modificacion": {
-                "type": "string",
-                "format": "date-time",
-                "nullable": true
-            }
+    "type": "object",
+    "properties": {
+        "codigo_grupo": {
+            "title": "Código de Grupo",
+            "type": "string",
+            "maxLength": 32
         },
-        "required": [
-            "codigo_grupo",
-            "docente",
-            "nucleo",
-            "objetivos_plan_aprendizaje",
-            "pnf",
-            "turno",
-            "unidad_curricular"
-        ],
-        "components": {
-            "schemas": {
-                "NucleoEnum": {
-                    "type": "string",
-                    "enum": [
-                        "TRANSVERSAL",
-                        "EPISTEMOLOGICO",
-                        "SOCIO_POLITICO",
-                        "TECNOLOGICO_PROFESIONAL"
-                    ],
-                    "description": "* `TRANSVERSAL` - Transversal\n* `EPISTEMOLOGICO` - Epistemológico\n* `SOCIO_POLITICO` - Socio Político\n* `TECNOLOGICO_PROFESIONAL` - Tecnológico Profesional"
-                },
-                "TurnoEnum": {
-                    "type": "string",
-                    "enum": [
-                        "N",
-                        "V",
-                        "M",
-                        "S"
-                    ],
-                    "description": "* `N` - Nocturno\n* `V` - Vespertino\n* `M` - Matutino\n* `S` - Sabatino"
-                }
+        "docente": {
+            "title": "Docente",
+            "type": "string",
+            "readOnly": true
+        },
+        "unidad_curricular": {
+            "title": "Unidad Curricular",
+            "$ref": "#/components/schemas/UCEnum"
+        },
+        "nucleo": {
+            "title": "Núcleo",
+            "$ref": "#/components/schemas/NucleoEnum"
+        },
+        "turno": {
+            "title": "Turno",
+            "$ref": "#/components/schemas/TurnoEnum"
+        },
+        "pnf": {
+            "title": "PNF",
+            "type": "string",
+            "maxLength": 32
+        },
+        "fecha_creacion": {
+            "title": "Fecha de Creación",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+        },
+        "fecha_modificacion": {
+            "title": "Fecha de Modificación",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+        }
+    },
+    "required": [
+        "codigo_grupo",
+        "nucleo",
+        "pnf",
+        "turno",
+        "unidad_curricular"
+    ],
+    "components": {
+        "schemas": {
+            "UCEnum": {
+                "type": "string",
+                "enum": [""],
+                "enumNames": [""]
+            },
+            "NucleoEnum": {
+                "type": "string",
+                "enum": [
+                    "FLO",
+                    "URB",
+                    "ALT",
+                    "LGA"
+                ],
+                "enumNames": [
+                    "La Floresta",
+                    "La Urbina",
+                    "Altagracia",
+                    "La Guaira"
+                ]
+            },
+            "TurnoEnum": {
+                "type": "string",
+                "enum": [
+                    "N",
+                    "V",
+                    "M",
+                    "S"
+                ],
+                "enumNames": [
+                    "Nocturno",
+                    "Vespertino",
+                    "Matutino",
+                    "Sabatino"
+                ]
             }
         }
     }

@@ -8,7 +8,7 @@ import { useContextoAutenticacion } from '@src/contexts/contextoAutentacion'
 import Login from '@src/pages/autenticacion/login'
 import Navegacion from '@src/pages/layout/layoutNavegacion'
 
-import ListadoPlanesAprendizaje from '@src/pages/planes/aprendizaje/listadoPlanesAprendizaje'
+import GestionPlanesAprendizaje from '@src/pages/planes/aprendizaje/gestionPlanAprendizaje'
 
 export const RutaProtegida = (props: {children?: ReactElement}) => {
     const { children } = props
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
         element: (
             <RutaProtegida>
                 <Navegacion title='Planes de Aprendizaje'>
-                    <ListadoPlanesAprendizaje/>
+                    <GestionPlanesAprendizaje/>
                 </Navegacion>
             </RutaProtegida>
         )
