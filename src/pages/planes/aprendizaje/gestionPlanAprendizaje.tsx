@@ -19,7 +19,7 @@ import {
     turnos,
     nucleos,
     Extendible,
-    instrumentoEvaluacion
+    instrumentosEvaluacion
 } from "@src/api/tipos"
 
 import planAprendizajeEsquema from "@src/api/esquemas/planAprendizaje.json"
@@ -62,7 +62,7 @@ export default function GestionarPlanDeAprendizaje() {
                 let idPlanEvaluacion: number = 0
 
                 response.data.map((ipe) => {
-                    let instrumento = instrumentoEvaluacion[ipe.instrumento_evaluacion]
+                    let instrumento = instrumentosEvaluacion[ipe.instrumento_evaluacion]
                     idPlanEvaluacion = ipe.plan_evaluacion
                     ids.push(ipe.id)
                     titulos.push(`${instrumento} ${ipe.peso}% (id: ${ipe.id})`);
@@ -125,6 +125,7 @@ export default function GestionarPlanDeAprendizaje() {
                     llave: "objetivos_plan_aprendizaje",
                     campos: ["id", "titulo", "duracion_horas", "evaluacion_asociada"],
                     anchoCampos: [1, 3, 1, 1],
+                    relleno: 2,
                     campoIdentificador: "id",
                     metodoCrear: crearObjetivoPlanAprendizaje,
                     metodoActualizacion: actualizarObjetivoPlanAprendizaje,

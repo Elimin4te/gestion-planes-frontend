@@ -9,6 +9,7 @@ import Login from '@src/pages/autenticacion/login'
 import Navegacion from '@src/pages/layout/layoutNavegacion'
 
 import GestionPlanesAprendizaje from '@src/pages/planes/aprendizaje/gestionPlanAprendizaje'
+import GestionPlanesDeEvaluacion from '@src/pages/planes/evaluacion/gestionPlanEvaluacion'
 
 export const RutaProtegida = (props: {children?: ReactElement}) => {
     const { children } = props
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
         element: (
             <RutaProtegida>
                 <Navegacion title='Planes de Evaluación'>
-                    <></>
+                    <GestionPlanesDeEvaluacion/>
                 </Navegacion>
             </RutaProtegida>
         )

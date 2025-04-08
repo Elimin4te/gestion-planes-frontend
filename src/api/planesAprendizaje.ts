@@ -30,7 +30,7 @@ export const eliminarObjetivoPlanAprendizaje = (id_opa: string | number) => {
     return axios.delete(`gestion-planes/objetivos-aprendizaje/${id_opa}/`)
 }
 
-export const actualizarObjetivoPlanAprendizaje = (id_opa: string | number, datos: Extendible): Promise<AxiosResponse<PlanDeAprendizaje>> => {
+export const actualizarObjetivoPlanAprendizaje = (id_opa: string | number, datos: Extendible): Promise<AxiosResponse<ObjetivoPlanAprendizaje>> => {
     return axios.patch(`gestion-planes/objetivos-aprendizaje/${id_opa}/`, datos)
 }
 

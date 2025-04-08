@@ -51,11 +51,11 @@ export interface TablaAccionableProps<T, ST> {
     general: {
         campoIdentificadorObjeto: string | number
         formatearObjeto?: (objeto: T) => T
-        metodoCrear: (objeto: T) => Promise<AxiosResponse<any, any>>
-        metodoListado: () => Promise<AxiosResponse<any, any>>
+        metodoCrear: (objeto: T) => Promise<AxiosResponse<T, any>>
+        metodoListado: () => Promise<AxiosResponse<T[], any>>
     }
     tabla: {
-        metodoActualizacion: (identificador: string | number, datos: Extendible) => Promise<AxiosResponse<any, any>>
+        metodoActualizacion: (identificador: string | number, datos: Extendible) => Promise<AxiosResponse<T, any>>
         metodoExportado: (identificador: string | number) => Promise<AxiosResponse<any, any>>
         metodoBorrado: (identificador: string | number) => Promise<AxiosResponse<any, any>>
         obtenerNombreArchivo: (objeto: T) => string
@@ -65,8 +65,9 @@ export interface TablaAccionableProps<T, ST> {
             campos: string[]
             campoIdentificador: string | number
             anchoCampos: number[]
-            metodoCrear: (objeto: ST) => Promise<AxiosResponse<any, any>>
-            metodoActualizacion: (identificador: string | number, datos: Extendible) => Promise<AxiosResponse<any, any>>
+            relleno: number
+            metodoCrear: (objeto: ST) => Promise<AxiosResponse<ST, any>>
+            metodoActualizacion: (identificador: string | number, datos: Extendible) => Promise<AxiosResponse<ST, any>>
             metodoBorrado: (identificador: string | number) => Promise<AxiosResponse<any, any>>
         }
     }
@@ -136,7 +137,7 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
     const { isOpen: subFormularioEditarAbierto, onOpen: mostrarSubFormularioEditar, onClose: ocultarSubFormularioEditar } = useDisclosure()
 
     const cerrarAlertaBorradoRef = useRef<HTMLButtonElement>(null);
-    const rellenoSubElementos: null[] = Array(itemsEncabezado.length - subElementos.campos.length).fill(null);
+    const rellenoSubElementos: null[] = Array(subElementos.relleno).fill(null);
 
     const refrescarVista = () => {
         _refrescarVista(Math.random())
@@ -178,7 +179,7 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
                 ocultarFormularioCrear()
             }
         ).catch(
-            ( error: AxiosError ) => {
+            (error: AxiosError) => {
                 establecerAlertaAccion(
                     {
                         tipo: 'error',
@@ -192,8 +193,10 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
     const exportarObjeto = (objeto: T) => {
         let identificador = objeto[campoIdentificadorObjeto]
         metodoExportado(identificador).then(
-            ( response: AxiosResponse ) => {
-                const blob = new Blob([response.data]);
+            (response: AxiosResponse<Blob>) => {
+                const contentType = response.headers['content-type']
+                console.log(contentType)
+                const blob = new Blob([response.data], { type: contentType });
                 const urlObjeto = window.URL.createObjectURL(blob);
                 const enlace = document.createElement('a');
                 enlace.href = urlObjeto;
@@ -204,22 +207,26 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
                 window.URL.revokeObjectURL(urlObjeto);
             }
         ).catch(
-            (error: AxiosError<ErrorAPI>) => {
-                establecerAlertaAccion(
-                    {
-                        tipo: 'error',
-                        detalle: obtenerPrimerValor(error.response?.data)
-                    }
-                )
+            async (error: AxiosError<Blob>) => {
+                if (error.response) {
+                    let contenido: ErrorAPI = {}
+                    contenido = JSON.parse(await error.response.data.text())
+                    establecerAlertaAccion(
+                        {
+                            tipo: 'error',
+                            detalle: obtenerPrimerValor(contenido as ErrorAPI)
+                        }
+                    )
+                }
             }
         )
     }
 
     const actualizarObjeto = (datos: Extendible) => {
-        if ( objetoSeleccionado ) {
+        if (objetoSeleccionado) {
             let identificador = objetoSeleccionado[campoIdentificadorObjeto]
             metodoActualizacion(identificador, datos).then().catch(
-                ( ..._ ) => {
+                (..._) => {
                     establecerAlertaAccion(
                         {
                             tipo: 'error',
@@ -246,7 +253,7 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
                 ocultarSubFormularioCrear()
             }
         ).catch(
-            ( error: AxiosError ) => {
+            (error: AxiosError) => {
                 establecerAlertaAccion(
                     {
                         tipo: 'error',
@@ -258,10 +265,10 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
     }
 
     const actualizarSubObjeto = (datos: Extendible) => {
-        if ( subObjetoSeleccionado ) {
+        if (subObjetoSeleccionado) {
             let identificador = subObjetoSeleccionado[subElementos.campoIdentificador]
             subElementos.metodoActualizacion(identificador, datos).then().catch(
-                ( ..._ ) => {
+                (..._) => {
                     establecerAlertaAccion(
                         {
                             tipo: 'error',
@@ -271,7 +278,7 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
                 }
             )
             refrescarVista()
-            ocultarSubFormularioEditar()         
+            ocultarSubFormularioEditar()
         }
     }
 
@@ -364,35 +371,35 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
             <FormularioModalDinamico
                 modo='crear'
                 valoresPorDefecto={formulario.valoresPorDefecto?.principal}
-                titulo={contexto.titulo} 
-                esquema={formulario.esquema.obtenerEsquemaPrincipal(objetoSeleccionado)} 
+                titulo={contexto.titulo}
+                esquema={formulario.esquema.obtenerEsquemaPrincipal(objetoSeleccionado)}
                 manejarSubmit={crearObjeto}
                 abierto={formularioCrearAbierto}
                 cerrarModal={ocultarFormularioCrear}
             />
             <FormularioModalDinamico
-                modo='editar' 
+                modo='editar'
                 datos={objetoSeleccionado}
-                titulo={contexto.titulo} 
-                esquema={formulario.esquema.obtenerEsquemaPrincipal(objetoSeleccionado)} 
+                titulo={contexto.titulo}
+                esquema={formulario.esquema.obtenerEsquemaPrincipal(objetoSeleccionado)}
                 manejarSubmit={actualizarObjeto}
                 abierto={formularioEditarAbierto}
                 cerrarModal={ocultarFormularioEditar}
             />
-            <FormularioModalDinamico 
-                modo='crear' 
+            <FormularioModalDinamico
+                modo='crear'
                 valoresPorDefecto={formulario.valoresPorDefecto?.subObjeto}
-                titulo={startCase(subElementos.llave)} 
-                esquema={formulario.esquema.obtenerEsquemaSubObjeto(objetoSeleccionado, subObjetoSeleccionado)} 
+                titulo={startCase(subElementos.llave)}
+                esquema={formulario.esquema.obtenerEsquemaSubObjeto(objetoSeleccionado, subObjetoSeleccionado)}
                 manejarSubmit={crearSubObjeto}
                 abierto={subFormularioCrearAbierto}
                 cerrarModal={ocultarSubFormularioCrear}
             />
             <FormularioModalDinamico
-                modo='editar' 
+                modo='editar'
                 datos={subObjetoSeleccionado}
-                titulo={startCase(subElementos.llave)} 
-                esquema={formulario.esquema.obtenerEsquemaSubObjeto(objetoSeleccionado, subObjetoSeleccionado)} 
+                titulo={startCase(subElementos.llave)}
+                esquema={formulario.esquema.obtenerEsquemaSubObjeto(objetoSeleccionado, subObjetoSeleccionado)}
                 manejarSubmit={actualizarSubObjeto}
                 abierto={subFormularioEditarAbierto}
                 cerrarModal={ocultarSubFormularioEditar}
@@ -527,7 +534,7 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
                                                             >
                                                                 <Flex w='100%'>
                                                                     {startCase(campo)}:
-                                                                    <Text as='b'>&nbsp;{(subObjeto as any)[campo] ?? 'N/A'}</Text>
+                                                                    <Text as='b'>&nbsp;{objetosFormateados[idx][subElementos.llave][subidx][campo] ?? 'N/A'}</Text>
                                                                 </Flex>
                                                             </Td>
                                                         ))}

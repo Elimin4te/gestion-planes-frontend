@@ -1,6 +1,12 @@
 {
     "type": "object",
     "properties": {
+        "plan_aprendizaje": {
+            "title": "Plan de Aprendizaje Asociado",
+            "type": "string",
+            "default": "",
+            "readOnly": true
+        },
         "titulo": {
             "title": "Título",
             "type": "string",
@@ -25,12 +31,6 @@
             "type": "integer",
             "maximum": 9,
             "minimum": 2
-        },
-        "plan_aprendizaje": {
-            "title": "Plan de Aprendizaje Asociado",
-            "type": "string",
-            "default": "",
-            "readOnly": true
         },
         "evaluacion_asociada": {
             "title": "Evaluación Asociada",

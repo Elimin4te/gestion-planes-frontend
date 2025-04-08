@@ -11,7 +11,7 @@ export const crearPlanEvaluacion = (pe: PlanDeEvaluacion): Promise<AxiosResponse
 }
 
 export const descargarPlanEvaluacion = (codigo_pe: string | number) => {
-    return axios.get(`gestion-planes/planes-evaluacion/${codigo_pe}/descargar`)
+    return axios.get(`gestion-planes/planes-evaluacion/${codigo_pe}/descargar`, { responseType: 'blob' })
 }
 
 export const eliminarPlanEvaluacion = (codigo_pe: string | number) => {
@@ -34,7 +34,7 @@ export const eliminarItemPlanEvaluacion = (id_ipe: string | number) => {
     return axios.delete(`gestion-planes/items-evaluacion/${id_ipe}/`)
 }
 
-export const actualizarItemPlanEvaluacion = (id_ipe: string | number, datos: Extendible): Promise<AxiosResponse<PlanDeEvaluacion>> => {
+export const actualizarItemPlanEvaluacion = (id_ipe: string | number, datos: Extendible): Promise<AxiosResponse<ItemPlanEvaluacion>> => {
     return axios.patch(`gestion-planes/items-evaluacion/${id_ipe}/`, datos)
 }
 

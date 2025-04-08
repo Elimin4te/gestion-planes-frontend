@@ -21,7 +21,7 @@ export const estrategiasDidacticas: Extendible = {
     OT: 'Otras'
 };
 
-export const instrumentoEvaluacion: Extendible = {
+export const instrumentosEvaluacion: Extendible = {
     PR: 'Prueba escrita (objetiva)',
     PE: 'Prueba escrita (ensayo)',
     PO: 'Prueba oral',
