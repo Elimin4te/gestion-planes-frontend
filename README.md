@@ -1,45 +1,85 @@
-# ChakraFlow
-Your Chakra UI-powered dashboard solution. Packed with features like responsive design, dashboard elements, pages, UI components, and dynamic charts, ChakraFlow simplifies backend development. It's available for free and For developers of all levels.
+# gestion-planes-fronted
 
-## Introduction
-Looking for a powerful and comprehensive free Chakra UI React dashboard template? Meet ChakraFlow. It's feature-rich, highly customizable, and follows industry standards for ease of use and scalability. Craft premium-quality, responsive applications effortlessly with TypeScript support. Your web apps will shine across all devices.
-[View Demo](https://chakra-flow.vercel.app/)
+Este es el frontend para la aplicación de Gestión de Planes, construido con React y Vite.
 
-## Key Features
-- This solution allows you to reduce MVP development costs
-- ChakraFlow is based on a rich library powered by [ChakraUi](https://chakra-ui.com/)
-- 100% Free: start using it for your projects right away. No hidden payments, no trials, nothing
-- ⭐ Modern & great for projects of tomorrow: built with [React](https://reactjs.org/), and [ChakraUi](https://chakra-ui.com/)
-- Mobile first: optimized to reduce data usage on mobile devices
-- Responsive & adaptive: supports mobile, tablet, and desktop screens
-- Theming: use built-in light and dark themes or implement your own theme with just lines of code
+## Requisitos Previos
 
-## What's Included
-- Dashboard Layouts
-    - Classic
-    - Modern
-    - Compact
-- Core Dashboard Features
-- User Pages
-  - Account Settings
-  - Login
-  - Registration
-  - Error
+Asegúrate de tener instalado lo siguiente en tu sistema:
 
-## Contributing 
+* **Node.js:** (Se recomienda la última versión LTS) Puedes descargarlo desde [https://nodejs.org/](https://nodejs.org/)
+* **npm** o **yarn:** (Vienen instalados con Node.js)
 
-Contributions are always welcome and recommended! Here is how:
+## Instalación
 
-- Fork the repository ([here is the guide](https://docs.github.com/en/get-started/quickstart/fork-a-repo)).
-- Clone to your machine `git clone https://github.com/MezianeKhalil/ChakraFlow.git`
-- Make your changes
-- Create a pull request
+Sigue estos pasos para configurar el proyecto en tu entorno local:
 
-## Credits 
-- [React](https://reactjs.org/)
-- [Vite](https://vitejs.dev/)
-- [ChakraUi](https://chakra-ui.com/)
+1.  **Clona el repositorio:**
+    ```bash
+    git clone https://github.com/Elimin4te/gestion-planes-frontend.git .
+    cd gestion-planes-fronted
+    ```
 
-## Social Media
-- Twitter : [https://twitter.com/khalil_meziane](https://twitter.com/khalil_meziane)
-- linkedin : [https://www.linkedin.com/in/khalil-meziane/](https://www.linkedin.com/in/khalil-meziane/)
+2.  **Instala las dependencias:**
+    Utiliza `npm`:
+    ```bash
+    npm install
+    ```
+    O utiliza `yarn`:
+    ```bash
+    yarn install
+    ```
+
+## Configuración del Entorno
+
+1.  **Copia el archivo de ejemplo de entorno:**
+    ```bash
+    cp .env.example .env
+    ```
+
+2.  **Configura las variables de entorno en el archivo `.env`:**
+    Abre el archivo `.env` con un editor de texto y ajusta las variables según tu configuración. Por ejemplo, podrías necesitar configurar la URL de la API del backend.
+
+    ```
+    VITE_API_BASE_URL=[http://tu-backend.com/api](http://tu-backend.com/api)
+    # ... otras variables de entorno ...
+    ```
+
+## Ejecución del Proyecto
+
+Para iniciar el servidor de desarrollo de Vite, ejecuta el siguiente comando:
+
+Con `npm`:
+```bash
+npm run dev
+```
+
+Con `yarn`:
+```bash
+yarn dev
+```
+
+Esto iniciará la aplicación en un servidor de desarrollo local. La URL a la que puedes acceder (normalmente `http://localhost:5173`) se mostrará en tu terminal.
+
+## Construcción para Producción
+
+Para construir una versión optimizada para producción, ejecuta el siguiente comando:
+
+Con `npm`:
+```bash
+npm run build
+```
+
+Con `yarn`:
+```bash
+yarn build
+```
+
+Esto generará los archivos estáticos de la aplicación optimizados para producción en la carpeta `dist`.
+
+## Notas Adicionales
+
+* Asegúrate de que tu backend esté en funcionamiento y accesible desde la URL configurada en el archivo `.env`.
+* Consulta la documentación específica del backend para conocer los endpoints de la API y los formatos de datos esperados.
+* Si encuentras algún problema durante la instalación o ejecución, revisa los mensajes de error en la terminal y asegúrate de tener las versiones correctas de Node.js y npm/yarn instaladas.
+
+¡Disfruta trabajando en el frontend de Gestión de Planes!
