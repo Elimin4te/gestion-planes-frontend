@@ -148,6 +148,33 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
         mostrarAlerta()
     }
 
+    const manejarErrorAccion = (error: AxiosError<ErrorAPI>, accion: string, contexto: string) => {
+        let textoDetalle: string = `Error Desconocido al intentar ${accion} ${contexto}`
+        if (error.response?.data) {
+            textoDetalle = obtenerPrimerValor(error.response?.data)
+        }
+        establecerAlertaAccion(
+            {
+                tipo: 'error',
+                detalle: textoDetalle
+            }
+        )
+    }
+
+    const manejarExitoAccion = (accionPasado: string, contexto: string, opciones: {
+        refrescar: boolean,
+        ejecutarDespues?: () => void
+    }) => {
+        establecerAlertaAccion(
+            {
+                tipo: 'exito',
+                detalle: `${contexto} ${accionPasado} con éxito.`
+            }
+        )
+        if (opciones.refrescar) {  refrescarVista() }
+        if (opciones.ejecutarDespues) { opciones.ejecutarDespues() }
+    }
+
     const obtenerObjetos = () => {
         metodoListado().then(
             (response: AxiosResponse<T[]>) => {
@@ -168,25 +195,11 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
 
     const crearObjeto = (datos: Extendible) => {
         metodoCrear(datos as T).then(
-            (..._) => {
-                establecerAlertaAccion(
-                    {
-                        tipo: 'exito',
-                        detalle: `${contexto.titulo} creado correctamente.`
-                    }
-                )
-                refrescarVista()
-                ocultarFormularioCrear()
-            }
+            (..._) => manejarExitoAccion(
+                "creado", contexto.titulo, { refrescar: true, ejecutarDespues: ocultarFormularioCrear }
+            )
         ).catch(
-            (error: AxiosError) => {
-                establecerAlertaAccion(
-                    {
-                        tipo: 'error',
-                        detalle: `No se pudo crear el ${contexto.titulo} (${error.response?.status})`
-                    }
-                )
-            }
+            (error: AxiosError<ErrorAPI>) => manejarErrorAccion(error, "crear", contexto.titulo)
         )
     }
 
@@ -225,15 +238,12 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
     const actualizarObjeto = (datos: Extendible) => {
         if (objetoSeleccionado) {
             let identificador = objetoSeleccionado[campoIdentificadorObjeto]
-            metodoActualizacion(identificador, datos).then().catch(
-                (..._) => {
-                    establecerAlertaAccion(
-                        {
-                            tipo: 'error',
-                            detalle: `No se pudo actualizar el ${contexto.titulo} ${identificador}.`
-                        }
-                    )
-                }
+            metodoActualizacion(identificador, datos).then(
+                (..._) => manejarExitoAccion(
+                    "actualizado", contexto.titulo, { refrescar: true, ejecutarDespues: ocultarFormularioEditar }
+                )
+            ).catch(
+                (error: AxiosError<ErrorAPI>) => manejarErrorAccion(error, "actualizar", contexto.titulo)
             )
             refrescarVista()
             ocultarFormularioEditar()
@@ -242,40 +252,23 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
 
     const crearSubObjeto = (datos: Extendible) => {
         subElementos.metodoCrear(datos as ST).then(
-            (..._) => {
-                establecerAlertaAccion(
-                    {
-                        tipo: 'exito',
-                        detalle: `${startCase(subElementos.llave)} creado correctamente.`
-                    }
-                )
-                refrescarVista()
-                ocultarSubFormularioCrear()
-            }
+            (..._) => manejarExitoAccion(
+                "creado", contexto.subtitulo, { refrescar: true, ejecutarDespues: ocultarSubFormularioCrear }
+            )
         ).catch(
-            (error: AxiosError) => {
-                establecerAlertaAccion(
-                    {
-                        tipo: 'error',
-                        detalle: `No se pudo crear el ${startCase(subElementos.llave)} (${error.response?.status})`
-                    }
-                )
-            }
+            (error: AxiosError<ErrorAPI>) => manejarErrorAccion(error, "crear", contexto.subtitulo)
         )
     }
 
     const actualizarSubObjeto = (datos: Extendible) => {
         if (subObjetoSeleccionado) {
             let identificador = subObjetoSeleccionado[subElementos.campoIdentificador]
-            subElementos.metodoActualizacion(identificador, datos).then().catch(
-                (..._) => {
-                    establecerAlertaAccion(
-                        {
-                            tipo: 'error',
-                            detalle: `No se pudo actualizar el ${startCase(subElementos.llave)} ${identificador}.`
-                        }
-                    )
-                }
+            subElementos.metodoActualizacion(identificador, datos).then(
+                (..._) => manejarExitoAccion(
+                    "actualizado", contexto.subtitulo, { refrescar: true, ejecutarDespues: ocultarSubFormularioEditar }
+                )
+            ).catch(
+                (error: AxiosError<ErrorAPI>) => manejarErrorAccion(error, "actualizar", contexto.subtitulo)
             )
             refrescarVista()
             ocultarSubFormularioEditar()
@@ -286,24 +279,11 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
         if (objeto) {
             let identificador = objeto[campoIdentificadorObjeto]
             metodoBorrado(identificador).then(
-                (..._) => {
-                    establecerAlertaAccion(
-                        {
-                            tipo: 'advertencia',
-                            detalle: `Se eliminó el ${contexto.titulo} con éxito.`
-                        }
-                    )
-                    refrescarVista()
-                }
+                (..._) => manejarExitoAccion(
+                    "eliminado", contexto.titulo, { refrescar: true }
+                )
             ).catch(
-                (error: AxiosError<ErrorAPI>) => {
-                    establecerAlertaAccion(
-                        {
-                            tipo: 'error',
-                            detalle: obtenerPrimerValor(error.response?.data)
-                        }
-                    )
-                }
+                (error: AxiosError<ErrorAPI>) => manejarErrorAccion(error, "borrar", contexto.titulo)
             )
         }
     }
@@ -312,24 +292,11 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
         if (subObjeto) {
             let identificador = subObjeto[subElementos.campoIdentificador]
             subElementos.metodoBorrado(identificador).then(
-                (..._) => {
-                    establecerAlertaAccion(
-                        {
-                            tipo: 'advertencia',
-                            detalle: `Se eliminó el ${startCase(subElementos.llave)} con éxito.`
-                        }
-                    )
-                    refrescarVista()
-                }
+                (..._) => manejarExitoAccion(
+                    "eliminado", contexto.subtitulo, { refrescar: true }
+                )
             ).catch(
-                (error: AxiosError<ErrorAPI>) => {
-                    establecerAlertaAccion(
-                        {
-                            tipo: 'error',
-                            detalle: obtenerPrimerValor(error.response?.data)
-                        }
-                    )
-                }
+                (error: AxiosError<ErrorAPI>) => manejarErrorAccion(error, "borrar", contexto.subtitulo)
             )
         }
     }
@@ -512,7 +479,7 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
                                                     <Td colSpan={itemsEncabezado.length + 5}>
                                                         <Flex>
                                                             <Text textAlign={'center'} w={'100%'}>
-                                                                {`${(objeto[subElementos.llave] as unknown as ST[]).length} ${contexto.subtitulo}`}
+                                                                {`${contexto.subtitulo}: ${(objeto[subElementos.llave] as unknown as ST[]).length}`}
                                                             </Text>
                                                         </Flex>
                                                     </Td>

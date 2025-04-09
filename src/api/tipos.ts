@@ -114,6 +114,7 @@ export type PlanDeEvaluacion = {
     plan_aprendizaje: string;
     items_plan_evaluacion: ItemPlanEvaluacion[];
     nombre: string;
+    peso_total_actual: string;
     fecha_creacion: string; // Formato $date-time
     fecha_modificacion?: string | null; // Formato $date-time, nullable
 };
