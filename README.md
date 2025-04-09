@@ -75,11 +75,3 @@ yarn build
 ```
 
 Esto generará los archivos estáticos de la aplicación optimizados para producción en la carpeta `dist`.
-
-## Notas Adicionales
-
-* Asegúrate de que tu backend esté en funcionamiento y accesible desde la URL configurada en el archivo `.env`.
-* Consulta la documentación específica del backend para conocer los endpoints de la API y los formatos de datos esperados.
-* Si encuentras algún problema durante la instalación o ejecución, revisa los mensajes de error en la terminal y asegúrate de tener las versiones correctas de Node.js y npm/yarn instaladas.
-
-¡Disfruta trabajando en el frontend de Gestión de Planes!
