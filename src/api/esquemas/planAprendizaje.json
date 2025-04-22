@@ -8,7 +8,7 @@
         },
         "docente": {
             "title": "Docente",
-            "type": "string",
+            "type": "number",
             "readOnly": true
         },
         "unidad_curricular": {

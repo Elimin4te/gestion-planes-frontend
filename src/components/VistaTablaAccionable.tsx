@@ -423,7 +423,7 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
                             {/* Encabezado de la tabla */}
                             <Thead textAlign='center'>
                                 <Tr>
-                                    <Th colSpan={1}>{"  "}</Th> {/* Columna para el botón de expandir/contraer */}
+                                    <Th colSpan={1}>{"v/ʌ"}</Th> {/* Columna para el botón de expandir/contraer */}
                                     {/* Mapeo de los encabezados principales */}
                                     {itemsEncabezado.map((header) => (
                                         <Th key={header}>{startCase(header)}</Th>
@@ -431,7 +431,7 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
                                     {/* Columnas para las acciones */}
                                     <Th colSpan={1} textAlign='center'>Exportar</Th>
                                     <Th colSpan={1} textAlign='center'>Editar</Th>
-                                    <Th colSpan={1} textAlign='center'>Crear Item</Th>
+                                    <Th colSpan={1} textAlign='center'>+ Item</Th>
                                     <Th colSpan={1} textAlign='center'>Eliminar</Th>
                                 </Tr>
                             </Thead>

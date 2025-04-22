@@ -155,6 +155,7 @@ const Aside = ({ onClose, isOpen, ...rest }: AsideProps) => {
             h="100%"
             minH="100vh"
             zIndex={99}
+            backgroundColor={useColorModeValue('gray.50', '#1a202c')}
             {...rest}
         >
             <HStack p="2.5" h='10vh' justify="space-between">
