@@ -208,7 +208,6 @@ export function TablaAccionable<T extends Extendible, ST extends Extendible>(
         metodoExportado(identificador).then(
             (response: AxiosResponse<Blob>) => {
                 const contentType = response.headers['content-type']
-                console.log(contentType)
                 const blob = new Blob([response.data], { type: contentType });
                 const urlObjeto = window.URL.createObjectURL(blob);
                 const enlace = document.createElement('a');

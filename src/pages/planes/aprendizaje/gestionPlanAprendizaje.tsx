@@ -151,7 +151,6 @@ export default function GestionarPlanDeAprendizaje() {
     const obtenerEsquemaOPA = (pa?: PlanDeAprendizaje, _?: any) => {
         const codigoGrupo = pa?.codigo_grupo ?? "";
         let parametros: { enum: number[], enumNames: string[] } = itemsPlanEvaluacionEsquematizados[pa?.plan_evaluacion ?? 0];
-        console.log(itemsPlanEvaluacionEsquematizados);
         parametros = parametros ?? {
             enum: [null],
             enumNames: ["N/A"],
