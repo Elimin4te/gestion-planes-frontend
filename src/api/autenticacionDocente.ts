@@ -5,13 +5,14 @@ import Cookies from "js-cookie"
 export const login = (cedula: string) => {
 
     // Limpia la cedula
-    if (!cedula.startsWith('V-')) {
-        cedula = 'V-' + cedula
-    }
     cedula = cedula.split('.').join('')
     cedula = cedula.split('_').join('')
+    cedula = cedula.replace('V-', '')
 
-    return axios.post('autenticacion-docente/login', {'cedula': cedula})
+    // Se convierte a numero ahora
+    let cedula_formateada = new Number(cedula)
+
+    return axios.post('autenticacion-docente/login', {'cedula': cedula_formateada})
 }
 
 

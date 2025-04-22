@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 export type Docente = {
     nombre: string
     apellido: string
-    cedula: string
+    cedula: number
     correo: string
 }
 
